@@ -17,7 +17,10 @@ class ChampionController {
     async getBuild(request: Request, response: Response) {
         try {
             const url = `https://tierlist.gg/champions/${request.params.champion}/Build`
-            const browser = await puppetter.launch();
+            const browser = await puppetter.launch({
+                headless:true,
+                args: ['--no-sandbox']
+            });
             const page = await browser.newPage();
             await page.goto(url);
 
@@ -48,7 +51,10 @@ class ChampionController {
     async list(request: Request, response: Response) {
         try {
             const url = `https://tierlist.gg/cheatsheet`
-            const browser = await puppetter.launch();
+            const browser = await puppetter.launch({
+                headless:true,
+                args: ['--no-sandbox']
+            });
             const page = await browser.newPage();
             await page.goto(url, { waitUntil: 'networkidle2' });
             const championList: Array<Object> = await getChampionList(page);
