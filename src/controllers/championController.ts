@@ -60,7 +60,7 @@ class ChampionController {
             const championList: Array<Object> = await getChampionList(page);
             return response.json(championList);
         } catch (error) {
-            return response.json(error).status(500);
+            return response.json(error).status(500); 
         }
     }
 
