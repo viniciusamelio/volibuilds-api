@@ -9,6 +9,7 @@ router.get('/',(request,response)=>{
 });
 
 router.get('/champion/:champion',championController.getBuild);
+router.get('/champion',championController.list);
 
 
 export default router;
