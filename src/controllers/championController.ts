@@ -16,7 +16,7 @@ class ChampionController {
 
     async getBuild(request: Request, response: Response) {
         try {
-            const url = `https://tierlist.gg/champions/${request.params.champion}/Build`
+            const url = `https://www.op.gg/champion/${request.params.champion}/statistics/top`
             const browser = await puppetter.launch({
                 headless:true,
                 args: ['--no-sandbox']
@@ -24,25 +24,12 @@ class ChampionController {
             const page = await browser.newPage();
             await page.goto(url);
 
+            //const skillPriority = await getSkillPriority(page);
 
-            const picture = await getPicture(page);
-
-            const lane = await getLane(page);
-
-            const analyzedGames = await getGames(page);
-
-            const data = await getData(page);
-
-            const startingItems = await getStarting(page);
-            const endGameItems = await getEndGameItems(page);
-
-            const skillPriority = await getSkillPriority(page);
-
-            const runes: Array<Object> = await getRunes(page);
 
             const spells: Array<Object> = await getSpells(page);
-
-            return response.json({ picture: picture, lane: lane, games: analyzedGames, data: data, spells: spells, starting: startingItems, items: endGameItems, skills: skillPriority, runes: runes });
+            
+            return response.json({ spells: spells });
         } catch (error) {
             return response.json(error).status(500);
         }

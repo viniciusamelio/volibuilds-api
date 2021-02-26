@@ -1,14 +1,15 @@
 import puppetter from 'puppeteer';
 const getSpells = async (page: puppetter.Page) => {
     return await page.evaluate(() => {
-        const list: Array<Object> = [];
-        const items: NodeListOf<any> = document.querySelectorAll('.ChampProfile-build-spells img');
-        items.forEach(item => {
-            list.push({
-                "img": item.attributes['data-src'].value
+        const spells : Array<Object> = [];
+        const table = document.querySelector('.champion-overview__table--summonerspell tbody');
+        const rows = table?.querySelectorAll('tr');
+        rows?.forEach(item=>{
+            item.querySelectorAll('.champion-overview__data img').forEach((image: any)=>{
+                spells.push('https:'+image.attributes.src.value)
             });
         });
-        return list;
+        return spells;
     });
 }
 

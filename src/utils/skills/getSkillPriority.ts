@@ -1,15 +1,15 @@
 import puppetter from 'puppeteer';
 const getSkillPriority = async (page: puppetter.Page) => {
     return await page.evaluate(() => {
-        const list: Array<Object> = [];
-        const items: NodeListOf<any> = document.querySelectorAll('.ChampProfile-abilities-order div.skill');
-        items.forEach(item => {
-            list.push({
-                "img": item.firstChild.attributes['data-src'].value,
-                "skill": item.attributes['data-content'].value
+        const spells : Array<Object> = [];
+        const table = document.querySelectorAll('.champion-overview__table--summonerspell tbody')[1];
+        const rows = table?.querySelectorAll('tr');
+        rows?.forEach(item=>{
+            item.querySelectorAll('.champion-overview__data img').forEach((image: any)=>{
+                spells.push('https:'+image.attributes.src.value)
             });
         });
-        return list;
+        return spells;
     });
 }
 
